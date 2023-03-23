@@ -8,7 +8,7 @@ cat << "EOF"
 Connect your iDevice to this computer
 
 The keyboard layout is in American Qwerty.
-Your iDevice's default password is alpine.
+Your iDevice's default password is alpine (should automatically be entered).
 Your iDevice's users are `root` and `mobile`.
 Your iDevice's default port is 22.
 
@@ -19,6 +19,6 @@ prompt 'Port: ' port
 clear
 
 blue_echo 'SSHing into your iDevice...'
-ssh -o "ProxyCommand=inetcat $port" -o "UserKnownHostsFile=/dev/null" $user@iPhone || \
+DROPBEAR_PASSWORD='alpine' dbclient -J "netcat $port"  $user@iPhone || \
     failed_echo 'Failed to SSH into your iDevice.'
 enter_to_quit
